@@ -1,0 +1,8 @@
+#### plain response
+GET http://localhost:8080/t
+
+#### array of elements, but it takes 5 seconds to get it due to the nature of source
+GET http://localhost:8080/a
+
+#### stream, but idea doesn't support streaming, see HttpConsumeStream implementation
+GET http://localhost:8080/s

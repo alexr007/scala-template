@@ -11,7 +11,7 @@ import org.http4s.HttpRoutes
 import scala.concurrent.duration.DurationInt
 import scala.util.Random
 
-object HttpServe extends IOApp.Simple {
+object HttpServeStream extends IOApp.Simple {
 
   /** 5 elements via 1 second */
   val stream: Stream[IO, Data] =
@@ -23,11 +23,12 @@ object HttpServe extends IOApp.Simple {
   // pack them as array
   import org.http4s.circe.streamJsonArrayEncoder
   val route: HttpRoutes[IO] = HttpRoutes.of[IO] {
-    case GET -> Root / "test" => Ok("test")
+    /** just test response */
+    case GET -> Root / "t" => Ok("test")
     /** serve them as separate elements */
     case GET -> Root / "s" => Ok(stream.map(_.asJson.noSpaces))
     /** serve them as an array */
-    case GET -> Root / "s2" => Ok(stream.map(_.asJson))
+    case GET -> Root / "a" => Ok(stream.map(_.asJson))
   }
 
   override def run = BlazeServerBuilder[IO]
